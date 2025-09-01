@@ -10,7 +10,10 @@ const notoSansJP = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
-  title: "Josan Land",
+  title: {
+    default: "Josan Land",
+    template: "%s | Josan Land"
+  },
   description: "ジョサン教公式ウェブサイト。",
 };
 
