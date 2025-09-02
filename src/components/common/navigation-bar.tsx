@@ -55,7 +55,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
       href: "/resources",
       items: [
         { title: "情報", href: "/resources/info", description: "ジョサン教についての情報。" },
-        { title: "ブログ", href: "/rescorces/blog", description: "ジョサン教についてのブログ。" },
+        { title: "ブログ", href: "/resources/blog", description: "ジョサン教についてのブログ。" },
         { title: "利用規約", href: "/resources/terms", description: "Josan Landの利用規約。" },
         { title: "プライバシーポリシー", href: "/resources/privacypolicy", description: "Josan Landのプライバシーポリシー。" }
       ]
@@ -115,11 +115,11 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
             </div>
           </div>
           <div className="p-6 border-t border-border space-y-3">
-            <Button variant="outline" className="w-full">
-              ログイン
+            <Button variant="outline" className="w-full" asChild>
+              <a href="/auth/login">ログイン</a>
             </Button>
-            <Button className="w-full">
-              サインアップ
+            <Button className="w-full" asChild>
+              <a href="/auth/signup">サインアップ</a>
             </Button>
           </div>
         </div>
@@ -128,66 +128,85 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
   )
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 font-sans">
-      <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <MobileNavigation />
-            <a href="/" className="flex items-center space-x-2">
-              <img src={logo} alt={brandName} className="h-8 w-8" />
-              <span className="font-bold text-xl hidden sm:inline-block">{brandName}</span>
-            </a>
+    <header className="fixed top-0 z-50 w-full font-sans">
+      <div className="hidden md:block">
+        <div className="mx-4 mt-4 rounded-xl border border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-lg">
+          <div className="container mx-auto px-4">
+            <div className="flex h-16 items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <a href="/" className="flex items-center space-x-2">
+                  <img src={logo} alt={brandName} className="h-8 w-8" />
+                  <span className="font-bold text-xl">{brandName}</span>
+                </a>
+                <NavigationMenu className="ml-8">
+                <NavigationMenuList className="[&>li]:transition-all [&>li]:duration-150 [&>li:hover]:bg-accent/50">
+                  {navigationItems.map((item, index) => (
+                    <NavigationMenuItem key={index}>
+                      {item.items ? (
+                        <>
+                          <NavigationMenuTrigger className="h-10 px-4 py-2 data-[state=open]:bg-accent/50 hover:bg-accent/30 transition-all duration-200">
+                            {item.title}
+                          </NavigationMenuTrigger>
+                          <NavigationMenuContent>
+                            <div className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                              {item.items.map((subItem, subIndex) => (
+                                <NavigationMenuLink key={subIndex} asChild>
+                                  <a
+                                    href={subItem.href}
+                                    className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                  >
+                                    <div className="text-sm font-medium leading-none">{subItem.title}</div>
+                                    <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                                      {subItem.description}
+                                    </p>
+                                  </a>
+                                </NavigationMenuLink>
+                              ))}
+                            </div>
+                          </NavigationMenuContent>
+                        </>
+                      ) : (
+                        <NavigationMenuLink asChild>
+                          <a
+                            href={item.href}
+                            className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+                          >
+                            {item.title}
+                          </a>
+                        </NavigationMenuLink>
+                      )}
+                    </NavigationMenuItem>
+                  ))}
+                 </NavigationMenuList>
+               </NavigationMenu>
+               </div>
+              <div className="flex items-center space-x-2">
+                <ThemeToggle />
+                <div className="flex items-center space-x-2">
+                  <Button variant="ghost" size="sm" asChild>
+                    <a href="/auth/login">ログイン</a>
+                  </Button>
+                  <Button size="sm" asChild>
+                    <a href="/auth/signup">サインアップ</a>
+                  </Button>
+                </div>
+              </div>
+            </div>
           </div>
-          <NavigationMenu className="hidden md:flex">
-            <NavigationMenuList className="[&>li]:transition-all [&>li]:duration-150 [&>li:hover]:bg-accent/50">
-              {navigationItems.map((item, index) => (
-                <NavigationMenuItem key={index}>
-                  {item.items ? (
-                    <>
-                      <NavigationMenuTrigger className="h-10 px-4 py-2 data-[state=open]:bg-accent/50 hover:bg-accent/30 transition-all duration-200">
-                        {item.title}
-                      </NavigationMenuTrigger>
-                      <NavigationMenuContent>
-                        <div className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                          {item.items.map((subItem, subIndex) => (
-                            <NavigationMenuLink key={subIndex} asChild>
-                              <a
-                                href={subItem.href}
-                                className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                              >
-                                <div className="text-sm font-medium leading-none">{subItem.title}</div>
-                                <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                                  {subItem.description}
-                                </p>
-                              </a>
-                            </NavigationMenuLink>
-                          ))}
-                        </div>
-                      </NavigationMenuContent>
-                    </>
-                  ) : (
-                    <NavigationMenuLink asChild>
-                      <a
-                        href={item.href}
-                        className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-                      >
-                        {item.title}
-                      </a>
-                    </NavigationMenuLink>
-                  )}
-                </NavigationMenuItem>
-              ))}
-            </NavigationMenuList>
-          </NavigationMenu>
-          <div className="flex items-center space-x-2">
-            <ThemeToggle />
-            <div className="hidden sm:flex items-center space-x-2">
-              <Button variant="ghost" size="sm">
-                ログイン
-              </Button>
-              <Button size="sm">
-                サインアップ
-              </Button>
+        </div>
+      </div>
+      <div className="md:hidden border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container mx-auto px-4">
+          <div className="flex h-16 items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <MobileNavigation />
+              <a href="/" className="flex items-center space-x-2">
+                <img src={logo} alt={brandName} className="h-8 w-8" />
+                <span className="font-bold text-xl">{brandName}</span>
+              </a>
+            </div>
+            <div className="flex items-center space-x-2">
+              <ThemeToggle />
             </div>
           </div>
         </div>
