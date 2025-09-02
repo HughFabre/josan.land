@@ -11,6 +11,11 @@ const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"],
 });
 
+// WDXL Lubrifont JP N for hero titles (using web font)
+const wdxlLubrifont = {
+  variable: "--font-wdxl-lubrifont",
+};
+
 export const metadata: Metadata = {
   title: {
     default: "Josan Land",
@@ -26,8 +31,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet" />
+        <link href="https://cdn.jsdelivr.net/npm/@fontsource/wdxl-lubrifont-jp-n@latest/index.css" rel="stylesheet" />
+      </head>
       <body
-        className={`${notoSansJP.variable} antialiased`}
+        className={`${notoSansJP.variable} ${wdxlLubrifont.variable} antialiased`}
       >
         <ThemeProvider
           attribute="class"
