@@ -18,7 +18,7 @@ interface Grid {
   repeatDelay?: number;
 }
 
-export function AnimatedGridPattern({
+export function Grid({
   width = 40,
   height = 40,
   x = -1,
