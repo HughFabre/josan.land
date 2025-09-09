@@ -54,7 +54,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
       title: "リソース",
       href: "/resources",
       items: [
-        { title: "情報", href: "/resources/info", description: "ジョサン教についての情報。" },
+        { title: "我々について", href: "/resources/info", description: "ジョサン教についての情報。" },
         { title: "ブログ", href: "/resources/blog", description: "ジョサン教についてのブログ。" },
         { title: "利用規約", href: "/resources/terms", description: "Josan Landの利用規約。" },
         { title: "プライバシーポリシー", href: "/resources/privacypolicy", description: "Josan Landのプライバシーポリシー。" }
